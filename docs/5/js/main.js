@@ -6,7 +6,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
     document.body.appendChild(app.view);
     let [direct, amount] = [1, 8]
-    const [IMG_W, VTX_N] = [256, 3]
+    const [IMG_W, VTX_N] = [256, 6]
     const ropeLength = IMG_W / VTX_N;
     const points = [];
     for (let i = 0; i < VTX_N; i++) {
@@ -21,9 +21,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
     app.stage.addChild(container);
     container.addChild(rope);
     app.ticker.add(() => {
-        points[1].y += amount * direct
-        if (0 < direct && (IMG_W / 2) <= points[1].y) { direct = -1 }
-        else if (direct < 0 && points[1].y < 0) { direct = 1 }
+        points[1].y += (amount * 0.6) * direct
+        points[2].y += amount * direct
+        points[3].y += amount * direct
+        points[4].y += (amount * 0.6) * direct
+        if (0 < direct && (IMG_W / 2) <= points[2].y) { direct = -1 }
+        else if (direct < 0 && points[2].y < 0) { direct = 1 }
         else {}
     });
 });
