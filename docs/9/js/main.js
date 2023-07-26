@@ -8,9 +8,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
     document.body.appendChild(app.view);
 
     const geometry = new PIXI.Geometry()
-        .addAttribute('aVertexPosition', [0,0, 100,0, 100,100, 0,100]);
+        .addAttribute('aVertexPosition', [0,0, 0,100, 100,0, 100,100]); // PIXI.DRAW_MODES.TRIANGLE_STRIP 前の頂点2つを再利用する
+//        .addAttribute('aVertexPosition', [-50,50, -50,-50, 50,-50, 50,50]);
+//        .addAttribute('aVertexPosition', [0,0, 100,0, 100,100, 0,100]); // rectangle ?
 //        .addAttribute('aVertexPosition', [-50,-50, -50,50, 50,50, 50,-50]);
-//        .addAttribute('aVertexPosition', [-100, -50, 100, -50, 0, 100]);
+//        .addAttribute('aVertexPosition', [-100, -50, 100, -50, 0, 100]); // triangle
+    //gl_Position = vec4((projectionMatrix * translationMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);
+    //        gl_Position = vec4(aVertexPosition, 1.0);
     const shader = PIXI.Shader.from(`
         precision mediump float;
         attribute vec2 aVertexPosition;
@@ -26,8 +30,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
             gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
         }
     `);
+    // https://pixijs.download/dev/docs/PIXI.Mesh.html
+    // https://tkengo.github.io/blog/2015/01/03/opengl-es-2-2d-knowledge-2/
+    //const rectangle = new PIXI.Mesh(geometry, shader);
+//    const rectangle = new PIXI.Mesh(geometry, shader, PIXI.DRAW_MODES.TRIANGLE_STRIP);
+    const rectangle = new PIXI.Mesh(geometry, shader, PIXI.State.for2d, PIXI.DRAW_MODES.TRIANGLE_STRIP);
+//    const rectangle = new PIXI.Mesh(geometry, shader, PIXI.State.for2d(), PIXI.DRAW_MODES.TRIANGLE_STRIP);
 
-    const rectangle = new PIXI.Mesh(geometry, shader);
     rectangle.position.set(400, 300);
     app.stage.addChild(rectangle);
     app.ticker.add((delta) => {
