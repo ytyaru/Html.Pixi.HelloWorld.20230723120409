@@ -33,9 +33,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // https://pixijs.download/dev/docs/PIXI.Mesh.html
     // https://tkengo.github.io/blog/2015/01/03/opengl-es-2-2d-knowledge-2/
     //const rectangle = new PIXI.Mesh(geometry, shader);
-//    const rectangle = new PIXI.Mesh(geometry, shader, PIXI.DRAW_MODES.TRIANGLE_STRIP);
     const rectangle = new PIXI.Mesh(geometry, shader, PIXI.State.for2d, PIXI.DRAW_MODES.TRIANGLE_STRIP);
-//    const rectangle = new PIXI.Mesh(geometry, shader, PIXI.State.for2d(), PIXI.DRAW_MODES.TRIANGLE_STRIP);
 
     rectangle.position.set(400, 300);
     app.stage.addChild(rectangle);
