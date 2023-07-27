@@ -59,13 +59,37 @@ window.addEventListener('DOMContentLoaded', (event) => {
 //    const rectangle = new PIXI.SimpleMesh(PIXI.Texture.from('./asset/image/mepachi/mabuta-ue.png'), geometry)
 //    rectangle.indices = [0, 1, 2, 3]
 //    rectangle.drawMode = PIXI.DRAW_MODES.TRIANGLE_STRIP
+
+        //.addAttribute('aVertexPosition', [0,0, 0,100, 100,0, 100,100]); // PIXI.DRAW_MODES.TRIANGLE_STRIP 前の頂点2つを再利用する
+
+    // https://pixijs.download/dev/docs/PIXI.SimpleMesh.html
+    // https://tkengo.github.io/blog/2015/01/03/opengl-es-2-2d-knowledge-2/
+    const texture = PIXI.Texture.from('./asset/image/mepachi/mabuta-ue.png')
+    const vertices = new Float32Array(4*2)
+    vertices[0] =   0; vertices[1] =   0; 
+    vertices[2] =   0; vertices[3] = 100; 
+    vertices[4] = 100; vertices[5] =   0; 
+    vertices[6] = 100; vertices[7] = 100; 
+    const uvs = new Float32Array(4*2)
+    uvs[0] = 0; uvs[1] = 0;
+    uvs[2] = 0; uvs[3] = 1;
+    uvs[4] = 1; uvs[5] = 0;
+    uvs[6] = 1; uvs[7] = 1;
+    const indices = new Uint16Array(6)
+    indices[0] = 0; indices[1] = 1;  indices[2] = 2; 
+    indices[3] = 2; indices[4] = 3;  indices[5] = 0; 
+    const rectangle = new PIXI.SimpleMesh(texture, vertices, uvs, indices, PIXI.DRAW_MODES.TRIANGLE_STRIP)
+
+    /*
     const rectangle = new PIXI.SimpleMesh(
         PIXI.Texture.from('./asset/image/mepachi/mabuta-ue.png'), // texture
-        geometry, // vertices [0,0, 0,100, 100,0, 100,100]
+        //geometry, // vertices [0,0, 0,100, 100,0, 100,100]
+        _points, // vertices [0,0, 0,100, 100,0, 100,100]
         [0,0, 0,1, 1,0, 1,1], // uvs
         [0, 1, 2, 3], // indices
         PIXI.DRAW_MODES.TRIANGLE_STRIP // drawMode
         )
+    */
     /*
     const rectangle = new PIXI.SimpleMesh(
         PIXI.Texture.from('./asset/image/mepachi/mabuta-ue.png'), // texture
@@ -84,6 +108,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     gsap.to(points[2], {x:50, duration:2, yoyo:true, repeat:-1})
 
 
+//    gsap.to(rectangle, {vertices[0]:400, duration:2, yoyo:true, repeat:-1})
 
 
 
