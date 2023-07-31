@@ -1,6 +1,13 @@
 // https://pixijs.io/examples/#/mesh-and-shaders/textured-mesh-basic.js
 // https://pixijs.io/examples/#/mesh-and-shaders/textured-mesh-advanced.js
 window.addEventListener('DOMContentLoaded', (event) => {
+    console.log(earcut([10,0, 0,50, 60,60, 70,10]))
+    
+//    const coords = [168,180, 168,178, 168,179, 168,181, 168,183];
+    const coords = [0,0, 0,100, 100,0, 100,100]
+    const delaunay = new Delaunator(coords);
+    console.log(delaunay.triangles);// [623, 636, 619,  636, 444, 619]
+
     const app = new PIXI.Application({
         view: document.getElementById('my-canvas'),
         backgroundColor: 0x1099bb
