@@ -1,26 +1,15 @@
 class Vertex {
-    constructor() { // PIXI.mesh.Rope
-    //constructor(rope) { // PIXI.mesh.Rope
+    constructor() {
         this.g = new PIXI.Graphics();
-//        this.g.x = rope.x + 400;
-//        this.g.y = rope.y + 400;
-//        this.rope = rope
     }
     get Graphics() { return this.g }
-//    get Rope() { return this.rope }
     draw(points) {
         this.g.clear();
         this.g.lineStyle(2, 0xffc2c2);
-        this.g.moveTo(points[0].x, points[0].y);
-        for (let i = 0; i < points.length; i++) {
-            this.g.lineTo(points[i].x, points[i].y);
-        }
-        for (let i = 0; i < points.length; i++) {
-            this.g.beginFill(0xff0022);
-            this.g.drawCircle(points[i].x, points[i].y, 10);
-            this.g.endFill();
-        }
-        /*
+        this.#drawArray(points) // 引数は配列でありPIXI.Pointには非対応
+        // this.#drawPoints(points) // 引数はPIXI.Point,配列どちらでもいいが毎回ifするので冗長
+    }
+    #drawArray(points) {
         this.g.moveTo(points[0], points[1]);
         for (let i = 0; i < points.length / 2; i++) {
             this.g.lineTo(points[(i*2)], points[(i*2)+1]);
@@ -30,9 +19,32 @@ class Vertex {
             this.g.drawCircle(points[(i*2)], points[(i*2)+1], 10);
             this.g.endFill();
         }
-        */
-        /*
-        */
+    }
+    #drawPixiPoints(points) {
+        this.g.moveTo(points[0].x, points[0].y);
+        for (let i = 0; i < points.length; i++) {
+            this.g.lineTo(points[i].x, points[i].y);
+        }
+        for (let i = 0; i < points.length; i++) {
+            this.g.beginFill(0xff0022);
+            this.g.drawCircle(points[i].x, points[i].y, 10);
+            this.g.endFill();
+        }
+    }
+    #drawPoints(points) {
+        this.g.moveTo(...this.#getXY(points, 0));
+        for (let i = 0; i < points.length; i++) {
+            this.g.lineTo(...this.#getXY(points, i));
+        }
+        for (let i = 0; i < points.length; i++) {
+            this.g.beginFill(0xff0022);
+            this.g.drawCircle(...this.#getXY(points, i), 10);
+            this.g.endFill();
+        }
+    }
+    #getXY(points, i) {
+        if (points[i] instanceof PIXI.Point) { return [points[i].x, points[i].y] }
+        else { return [points[(i*2)], points[(i*2)+1]] }
     }
     /*
     draw() {
