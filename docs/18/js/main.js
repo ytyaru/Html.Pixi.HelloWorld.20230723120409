@@ -26,17 +26,18 @@ window.addEventListener('DOMContentLoaded', async(event) => {
     //const vertices = new Float32Array([0,0, 0,100, 100,0, 100,100])
     //const vertices = new Float32Array([0,0, 0,100, 100,100, 100,0]) // 四角形。左上から半時計回りに。
     //const vertices = new Float32Array([0,0, 0,100, 100,100, 100,0, 50,50]) // 四角形。左上から半時計回りに。最後は中点。
-    const vertices = new Float32Array([0,0, 0,100, 100,100, 100,0,   50,50, 50,75,75,75,75,50]) // 四角形。左上から半時計回りに。最後は中点。
+    const vertices = new Float32Array([0,0, 0,100, 100,100, 100,0,   50,50, 50,75, 75,75, 75,50]) // 四角形。左上から半時計回りに。50,50からは中にある矩形。
     //const uvs = new Float32Array([0,0, 0,1, 1,0, 1,1])
     const uvs = new Float32Array([0,0, 0,1, 1,1, 1,0])
     console.log([10,0, 0,50, 60,60, 70,10]) // 期待値:[0,1,2, 2,3,0]
     console.log(earcut([10,0, 0,50, 60,60, 70,10])); // returns [1,0,3, 3,2,1]
-    console.log(earcut([0,0, 0,100, 100,100, 100,0, 50,50], [4])); // (12) [4,0,3, 1,0,4, 4,3,2, 2,1,4]
+    console.log(earcut([0,0, 0,100, 100,100, 100,0,   50,50, 50,75, 75,75, 75,50], [4])); // (12) [4,0,3, 1,0,4, 4,3,2, 2,1,4]
     console.log(vertices)         // [0,0, 0,100, 100,100, 100,0]
     //console.log(earcut(vertices)) // [1,0,3, 3,2,1]
-    console.log(earcut(vertices,[4])) // [1,0,3, 3,2,1]
+    console.log(earcut(vertices, [4])) // [1,0,3, 3,2,1]
     //const indices = new Uint16Array([0,1,2, 2,3,0])
-    const indices = new Uint16Array(earcut(vertices))
+    //const indices = new Uint16Array(earcut(vertices))
+    const indices = new Uint16Array(earcut(vertices, [4]))
     const rectangle = new PIXI.SimpleMesh(texture, vertices, uvs, indices, PIXI.DRAW_MODES.TRIANGLE_STRIP)
     vertex.Graphics.x = 400
     vertex.Graphics.y = 300
@@ -44,13 +45,17 @@ window.addEventListener('DOMContentLoaded', async(event) => {
     app.stage.addChild(rectangle);
     let direct = 1
     app.ticker.add((delta) => {
-        vertex.draw(vertices)
+        //vertex.draw(vertices)
+        vertex.drawArrayWithHoles(vertices, indices)
     });
     // https://greensock.com/forums/topic/25391-animate-vertices-in-threejs-with-gsap/
                                  // from  [ 0,0, 0,100, 100,0, 100,100]
     //gsap.to(rectangle.vertices, {endArray:[50,0, 0,100,  50,0, 100,100], duration:2, yoyo:true, repeat:-1})
                                  // from  [ 0,0, 0,100, 100,100, 100,0]
     gsap.to(rectangle.vertices, {endArray:[50,0, 0,100, 100,100, 50,0], duration:2, yoyo:true, repeat:-1})
+
+
+
     /*
     const tl = gsap.timeline();
     tl.to(rectangle, { vertices[0]:50, duration:2, yoyo:true, repeat:-1 })
