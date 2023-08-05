@@ -26,9 +26,14 @@ window.addEventListener('DOMContentLoaded', async(event) => {
     //const vertices = new Float32Array([0,0, 0,100, 100,0, 100,100])
     //const vertices = new Float32Array([0,0, 0,100, 100,100, 100,0]) // 四角形。左上から半時計回りに。
     //const vertices = new Float32Array([0,0, 0,100, 100,100, 100,0, 50,50]) // 四角形。左上から半時計回りに。最後は中点。
+    //const vertices = new Float32Array([0,0, 0,100, 100,100, 100,0,   50,50, 50,75, 75,75, 75,50]) // 四角形。左上から半時計回りに。50,50からは中にある矩形。
     const vertices = new Float32Array([0,0, 0,100, 100,100, 100,0,   50,50, 50,75, 75,75, 75,50]) // 四角形。左上から半時計回りに。50,50からは中にある矩形。
+    //const vertices = new Float32Array([0,0, 100,0, 100,100, 0,100,  20,20, 80,20, 80,80, 20,80])
     //const uvs = new Float32Array([0,0, 0,1, 1,0, 1,1])
-    const uvs = new Float32Array([0,0, 0,1, 1,1, 1,0])
+    //const uvs = new Float32Array([0,0, 0,1, 1,1, 1,0])
+    //const uvs = new Float32Array([0,0, 0,1, 1,1, 1,0,   0.5,0.5, 0.5,0.75, 0.75,0.75, 0.75,0.5])
+    const uvs = new Float32Array([0,0, 0,1, 1,1, 1,0,   0.5,0.5, 0.5,0.75, 0.75,0.75, 0.75,0.5])
+    //const uvs = new Float32Array([0,0, 1,0, 1,1, 0,1,   0.2,0.2, 0.8,0.2, 0.8,0.8, 0.2,0.8])
     console.log([10,0, 0,50, 60,60, 70,10]) // 期待値:[0,1,2, 2,3,0]
     console.log(earcut([10,0, 0,50, 60,60, 70,10])); // returns [1,0,3, 3,2,1]
     console.log(earcut([0,0, 0,100, 100,100, 100,0,   50,50, 50,75, 75,75, 75,50], [4])); // (12) [4,0,3, 1,0,4, 4,3,2, 2,1,4]

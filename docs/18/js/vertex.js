@@ -11,36 +11,19 @@ class Vertex {
     }
     // https://stackoverflow.com/questions/38191827/earcut-js-triangulation-with-holes
     drawArrayWithHoles(vertices, indices) {
-        this.g.moveTo(vertices[indices[0]], vertices[indices[0]+1]);
-        this.g.lineTo(vertices[indices[0]], vertices[indices[0]+1]);
-        this.g.lineTo(vertices[indices[1]], vertices[indices[1]+1]);
-        this.g.lineTo(vertices[indices[2]], vertices[indices[2]+1]);
-        /*
-        for (let i = 0; i < vertices.length; i+=3) {
-            this.g.moveTo(vertices[indices[ i   *2]], vertices[indices[ i   *2+1]]);
-            this.g.lineTo(vertices[indices[(i+1)*2]], vertices[indices[(i+1)*2+1]]);
-            this.g.lineTo(vertices[indices[(i+2)*2]], vertices[indices[(i+2)*2+1]]);
-        }
-        */
-        /*
-        for (let i = 0; i < vertices.length; i+=3) {
+        this.g.clear();
+        this.g.lineStyle(2, 0xffc2c2);
+        //for (let i=0; i<vertices.length; i+=3) {
+        for (let i=0; i<indices.length; i+=3) {
             this.g.moveTo(vertices[indices[i  ]*2], vertices[indices[i  ]*2+1]);
             this.g.lineTo(vertices[indices[i+1]*2], vertices[indices[i+1]*2+1]);
             this.g.lineTo(vertices[indices[i+2]*2], vertices[indices[i+2]*2+1]);
         }
-        for (let i = 0; i < vertices.length; i+=3) {
-            this.g.moveTo(vertices[indices[i  ]*2], vertices[indices[i  ]*2+1]);
-            this.g.lineTo(vertices[indices[i+1]*2], vertices[indices[i+1]*2+1]);
-            this.g.lineTo(vertices[indices[i+2]*2], vertices[indices[i+2]*2+1]);
-        }
-        */
-        /*
         for (let i = 0; i < vertices.length / 2; i++) {
             this.g.beginFill(0xff0022);
-            this.g.drawCircle(vertices[(i*2)], vertices[(i*2)+1], 10);
+            this.g.drawCircle(vertices[(i*2)], vertices[(i*2)+1], 6);
             this.g.endFill();
         }
-        */
     }
     #drawArray(points) {
         this.g.moveTo(points[0], points[1]);
