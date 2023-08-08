@@ -26,15 +26,6 @@ class ImageLoader { // Image→ImageBitmap→Canvas.getContext('2d').drawImage()
         }
         return imgDt
     }
-    static async createMask(src) {
-        const imgDt = await this.getImageData(src)
-        const data = imgDt.data
-        for (let i=0; i<data.length; i+=4) {
-            const [r,g,b,a] = [data[i],data[i+1],data[i+2],data[i+3]]
-            if (255===a) { data[i] = 255; data[i+1] = 0; data[i+2] = 0; }
-        }
-        return imgDt
-    }
     static #rgba(imgDt, i) { const d = imgDt.data; return [d[i], d[i+1], d[i+2], d[i+3]]; }
     static #isTransparent(imgDt, i) { const [r,g,b,a] = this.#rgba(imgDt, i); return (255===a); }
     static async getIndicesNotTransparent(src, px=0) { // px:intervalPixcel
