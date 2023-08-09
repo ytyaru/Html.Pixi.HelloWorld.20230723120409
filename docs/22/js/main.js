@@ -1,6 +1,29 @@
 // https://pixijs.io/examples/#/mesh-and-shaders/textured-mesh-basic.js
 // https://pixijs.io/examples/#/mesh-and-shaders/textured-mesh-advanced.js
 window.addEventListener('DOMContentLoaded', async(event) => {
+    // http://www.thothchildren.com/coworker/cource/image/edgecv/webedgeextcv
+    async function canny(){
+        //const img = await ImageLoader.getImageData(`asset/image/mepachi/mabuta-ue.png`)
+        const img = await ImageLoader.getImage(`asset/image/mepachi/mabuta-ue.png`)
+        console.log(img)
+        let src = cv.imread(img);
+        let dst = new cv.Mat();
+        cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
+        cv.Canny(src, dst, 50, 100, 3, false);
+        cv.imshow('canvas-input', dst);
+        src.delete();
+        dst.delete();
+    }
+    console.log(cv.getBuildInformation)
+    if (cv.getBuildInformation) { await canny() }
+    else{
+        //cv['onRuntimeInitialized'] = canny;// WASM
+        //cv['onRuntimeInitialized'] = async()=>{ await canny() }
+        cv.onRuntimeInitialized = async()=>{ await canny() }
+    }
+
+
+
     const imgDt = await ImageLoader.getImageData(`asset/image/mepachi/mabuta-ue.png`)
     console.log(imgDt)
     console.log(imgDt.width)
